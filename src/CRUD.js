@@ -35,6 +35,7 @@ const CRUD = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [error,setError]=useState(false)
   //// for new record
   const[itemName,setItemName]= useState('');
   const[itemDescription,setItemDescription]= useState('');  
@@ -98,21 +99,29 @@ const[editItemStatus,setEditItemStatus]= useState('');
 }
  const handleSave = ()=> {
     const url='http://localhost:5133/api/Item';
+   
     const data ={
         "itemName" : itemName,
         "itemDescription" : itemDescription,
         "itemStatus": itemStatus
         
     }
-    axios.post(url,data)
-    .then((result)=>{
-        getData();
-        clear();
-        toast.success('Item has been added');
-
-    }).catch((error)=>{
-        toast.error(error);
-    })
+    if(itemName.length==0 || itemDescription.length==0 ||itemStatus.length==0){
+        setError(true)
+    }
+    if(itemName && itemDescription && itemStatus)
+    {
+        axios.post(url,data)
+        .then((result)=>{
+            getData();
+            clear();
+            toast.success('Item has been added');
+    
+        }).catch((error)=>{
+            toast.error(error);
+        })
+    }
+    
 
  }
 const handleEdit=(id)=>{
@@ -142,6 +151,7 @@ const handleEdit=(id)=>{
         setEditItemDescription('');
         setEditItemStatus('');
         setEditItemId('');
+        setError('');
      }
 
  return (
@@ -181,13 +191,24 @@ const handleEdit=(id)=>{
       <Row>
       <Col><input type='text' className='form-control' placeholder='Enter Name'
        value={itemName} onChange={(e)=> setItemName(e.target.value)} required
-       /></Col>
+       />
+       {error&&itemName.length<=0?
+               <label style={{color:'red'}}>Item Name can't be Empty</label>:""}
+       </Col>
         <Col><input type='text' className='form-control' placeholder='Enter Description'
        value={itemDescription} onChange={(e)=> setItemDescription(e.target.value)} required
-       /></Col>
+       />
+        {error&&itemDescription.length<=0?
+               <label style={{color:'red'}}>Item Description can't be Empty</label>:""}
+       </Col>
         <Col><input type='text' className='form-control' placeholder='Enter Status'
         value={itemStatus} onChange={(e)=> setItemStatus(e.target.value)} required
-        /></Col>
+        />
+        {error&&itemStatus.length<=0?
+               <label
+               style={{color:'red'}}
+               >Item Status can't be Empty</label>:""}
+        </Col>
         
         
         <Col><button className='btn btn-primary' onClick={()=> handleSave()}>Submit</button> </Col>
