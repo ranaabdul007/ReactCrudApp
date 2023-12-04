@@ -148,6 +148,8 @@ const handleEdit=(id)=>{
     <div>
        
       <Fragment>
+
+        {/* new item form */}
       <br></br>
      <br></br>
      <div className='container' style={{ 
@@ -156,7 +158,7 @@ const handleEdit=(id)=>{
       borderRadius: '5px', 
       marginBottom: '20px',
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'}} >
-        
+
       <div className='container' style={{ 
       border: '1px solid #ccc', 
       padding: '10px', 
@@ -178,13 +180,13 @@ const handleEdit=(id)=>{
         <Container>
       <Row>
       <Col><input type='text' className='form-control' placeholder='Enter Name'
-       value={itemName} onChange={(e)=> setItemName(e.target.value)}
+       value={itemName} onChange={(e)=> setItemName(e.target.value)} required
        /></Col>
         <Col><input type='text' className='form-control' placeholder='Enter Description'
-       value={itemDescription} onChange={(e)=> setItemDescription(e.target.value)}
+       value={itemDescription} onChange={(e)=> setItemDescription(e.target.value)} required
        /></Col>
         <Col><input type='text' className='form-control' placeholder='Enter Status'
-        value={itemStatus} onChange={(e)=> setItemStatus(e.target.value)}
+        value={itemStatus} onChange={(e)=> setItemStatus(e.target.value)} required
         /></Col>
         
         
